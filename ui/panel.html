@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LOVELY BOY • CUTE PRO</title>
+  <link rel="stylesheet" href="glass-theme.css" />
+</head>
+<body>
+  <!-- লাইভ সাকুরা ফুল ও অ্যানিমে ব্যাকগ্রাউন্ড ক্যানভাস -->
+  <canvas id="animeBgCanvas"></canvas>
+
+  <div class="glass-shell">
+    <!-- টপ হেডার বার -->
+    <header class="top-bar">
+      <div class="brand-box">
+        <div class="avatar-ring">
+          <canvas id="cuteMascotCanvas" width="46" height="46"></canvas>
+        </div>
+        <div class="brand-info">
+          <h1 id="secretAdminTrigger">LOVELY BOY <span class="badge">CUTE PRO</span></h1>
+          <p class="sub-tag">Studio Voice &amp; Glass Shield • V11</p>
+        </div>
+      </div>
+      <button id="sfxToggleBtn" class="icon-pill active" title="UI Touch Sound">🔔</button>
+    </header>
+
+    <!-- ১. সিকিউরিটি লগইন ভল্ট স্ক্রিন -->
+    <section id="loginView" class="card-glass view-active">
+      <div class="lock-hero">
+        <div class="heart-lock">🔐🌸</div>
+        <h2>One-Time Access Vault</h2>
+        <p>Enter your unique passkey to unlock Studio Audio &amp; Cute Glass Controls</p>
+      </div>
+      <div class="input-group">
+        <input type="text" id="accessKeyInput" placeholder="Enter Passkey (e.g. LB-XXXX)" autocomplete="off" />
+        <button id="unlockBtn" class="btn-pink-glow">UNLOCK STUDIO ✨</button>
+      </div>
+      <p id="loginStatusMsg" class="status-text"></p>
+    </section>
+
+    <!-- ২. সিক্রেট অ্যাডমিন কি-জেনারেটর প্যানেল (হেডারে ৫ বার ট্যাপ করলে খুলবে) -->
+    <section id="adminView" class="card-glass hidden">
+      <div class="section-head">
+        <span>👑 Owner Key Generator</span>
+        <button id="closeAdminBtn" class="mini-close">✕</button>
+      </div>
+      <div class="input-group">
+        <input type="password" id="adminMasterPass" placeholder="Master Secret Code" />
+        <input type="text" id="customKeyInput" placeholder="Custom Key (Optional)" />
+        <button id="generateKeyBtn" class="btn-pink-glow">GENERATE 1-TIME KEY ⚡</button>
+      </div>
+      <div id="generatedKeyBox" class="key-output hidden">
+        <span id="newKeyText">LB-8842-PRO</span>
+        <button id="copyNewKeyBtn" class="mini-copy">COPY</button>
+      </div>
+      <p id="adminStatusMsg" class="status-text"></p>
+    </section>
+        <!-- ৩. মেইন স্টুডিও কন্ট্রোল ড্যাশবোর্ড (আনলক হওয়ার পর খুলবে) -->
+    <main id="studioDashboard" class="hidden">
+      <!-- নেভিগেশন ট্যাব -->
+      <nav class="tab-strip">
+        <button class="tab-btn active" data-tab="voiceTab">🎙️ Voice</button>
+        <button class="tab-btn" data-tab="melodyTab">🎵 Melody</button>
+        <button class="tab-btn" data-tab="shieldTab">🛡️ Shield</button>
+      </nav>
+
+      <!-- ট্যাব ১: স্টুডিও ভয়েস ক্লিয়ারিটি, ইকো ও ভয়েস চেঞ্জার -->
+      <section id="voiceTab" class="tab-pane active">
+        <div class="card-glass">
+          <div class="row-between">
+            <div>
+              <h3>✨ Studio Vocal Clarity</h3>
+              <span class="mini-desc">Noise Gate + Crystal Voice Boost</span>
+            </div>
+            <label class="cute-switch">
+              <input type="checkbox" id="studioClarityToggle" checked />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="slider-box">
+            <div class="slider-label"><span>Noise Suppression</span><b id="noiseGateVal">65%</b></div>
+            <input type="range" id="noiseGateSlider" min="0" max="100" value="65" />
+          </div>
+          <div class="slider-box">
+            <div class="slider-label"><span>Crystal Vocal Boost</span><b id="vocalBoostVal">40%</b></div>
+            <input type="range" id="vocalBoostSlider" min="0" max="100" value="40" />
+          </div>
+        </div>
+
+        <div class="card-glass">
+          <div class="row-between">
+            <div>
+              <h3>🌊 Live Echo &amp; Reverb</h3>
+              <span class="mini-desc">Studio Room &amp; Stage Echo</span>
+            </div>
+            <label class="cute-switch">
+              <input type="checkbox" id="echoActiveToggle" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="slider-box">
+            <div class="slider-label"><span>Echo Delay</span><b id="echoDelayVal">25%</b></div>
+            <input type="range" id="echoDelaySlider" min="5" max="90" value="25" />
+          </div>
+          <div class="slider-box">
+            <div class="slider-label"><span>Echo Depth</span><b id="echoFeedbackVal">30%</b></div>
+            <input type="range" id="echoFeedbackSlider" min="5" max="80" value="30" />
+          </div>
+        </div>
+
+        <div class="card-glass">
+          <h3>🎭 Real-Time Voice Changer</h3>
+          <div class="voice-grid" id="voiceModeGrid">
+            <button class="voice-chip active" data-voice="normal">🧑 Natural</button>
+            <button class="voice-chip" data-voice="anime">🌸 Cute Anime</button>
+            <button class="voice-chip" data-voice="baby">🍼 Sweet Baby</button>
+            <button class="voice-chip" data-voice="deep">🦁 Deep Bass</button>
+            <button class="voice-chip" data-voice="chipmunk">🐿️ Chipmunk</button>
+            <button class="voice-chip" data-voice="robot">🤖 Cyber Bot</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ট্যাব ২: মিষ্টি মেলোডি সাউন্ডবোর্ড প্যাড -->
+      <section id="melodyTab" class="tab-pane hidden">
+        <div class="card-glass">
+          <h3>🎶 Live Call Melody Soundboard</h3>
+          <p class="mini-desc">Tap any pad to play sweet crystal melodies directly in call</p>
+          <div class="melody-grid">
+            <button class="pad-btn" data-pad="sakura">🌸 Sakura Chime</button>
+            <button class="pad-btn" data-pad="heart">💖 Love Sparkle</button>
+            <button class="pad-btn" data-pad="angel">✨ Angel Harp</button>
+            <button class="pad-btn" data-pad="kawaii">🎀 Kawaii Pop</button>
+            <button class="pad-btn" data-pad="dream">🌙 Dream Bell</button>
+            <button class="pad-btn" data-pad="magic">🪄 Magic Wand</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ট্যাব ৩: প্রাইভেসি গ্লাস শিল্ড -->
+      <section id="shieldTab" class="tab-pane hidden">
+        <div class="card-glass">
+          <h3>🛡️ Cute Privacy Glass Shield</h3>
+          <div class="row-between spacer">
+            <span>Blur Chat Messages</span>
+            <label class="cute-switch"><input type="checkbox" id="blurMessagesToggle" /><span class="slider"></span></label>
+          </div>
+          <div class="row-between spacer">
+            <span>Blur Contact Names</span>
+            <label class="cute-switch"><input type="checkbox" id="blurNamesToggle" /><span class="slider"></span></label>
+          </div>
+          <div class="row-between spacer">
+            <span>Blur Profile Photos</span>
+            <label class="cute-switch"><input type="checkbox" id="blurPhotosToggle" /><span class="slider"></span></label>
+          </div>
+          <div class="row-between spacer">
+            <span>Stealth Mode (Hide Typing)</span>
+            <label class="cute-switch"><input type="checkbox" id="hideTypingToggle" /><span class="slider"></span></label>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- সব মডিউলার স্ক্রিপ্টের নিখুঁত সংযোগ -->
+  <script src="touch-sfx.js"></script>
+  <script src="anime-canvas.js"></script>
+  <script src="../security/auth-vault.js"></script>
+</body>
+</html>
