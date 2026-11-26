@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "LOVELY BOY • CUTE PRO",
+  "short_name": "LovelyBoyPro",
+  "version": "11.0.0",
+  "description": "Ultra-Cute Glassmorphism WhatsApp Studio with Real-Time Voice Clarity, Echo, Voice Changer, Melody Pad & Firebase Vault.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://lovely-boy-pro-default-rtdb.firebaseio.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "ui/panel.html",
+    "default_title": "LOVELY BOY • CUTE PRO"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ],
+      "js": [
+        "bridge/messenger-bridge.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "audio/voice-studio.js",
+        "audio/melody-pad.js",
+        "ui/touch-sfx.js",
+        "ui/anime-canvas.js"
+      ],
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ]
+    }
+  ]
+}
