@@ -1,21 +1,8 @@
-// LOVELY BOY • CUTE PRO (V11) - WhatsApp Web Bridge & Privacy Glass Shield
+// LOVELY BOY • CUTE PRO (V11.1) - WhatsApp Web Bridge & Privacy Glass Shield
 
 (function () {
-  // Inject audio engine scripts directly into page context
-  function injectEngine(filePath) {
-    const script = document.createElement("script");
-    script.src = chrome.runtime.getURL(filePath);
-    script.onload = function () {
-      this.remove();
-    };
-    (document.head || document.documentElement).appendChild(script);
-  }
-
-  injectEngine("audio/voice-studio.js");
-  injectEngine("audio/melody-pad.js");
-
-  // Apply or update Privacy Glass Shield CSS rules
   let shieldStyleEl = null;
+
   function applyPrivacyShield(settings) {
     if (!shieldStyleEl) {
       shieldStyleEl = document.createElement("style");
@@ -69,7 +56,6 @@
     shieldStyleEl.textContent = css;
   }
 
-  // Forward settings to page-level Audio Studio
   function syncToPage(settings) {
     applyPrivacyShield(settings);
     window.postMessage(
@@ -82,14 +68,18 @@
     );
   }
 
-  // Initial settings load
-  chrome.runtime.sendMessage({ type: "GET_SETTINGS" }, (res) => {
-    if (res && res.settings) {
-      syncToPage(res.settings);
-    }
-  });
+  function fetchAndSync() {
+    chrome.runtime.sendMessage({ type: "GET_SETTINGS" }, (res) => {
+      if (res && res.settings) {
+        syncToPage(res.settings);
+      }
+    });
+  }
 
-  // Listen for live updates from background/popup
+  fetchAndSync();
+  setTimeout(fetchAndSync, 1500);
+  setTimeout(fetchAndSync, 4000);
+
   chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === "SETTINGS_SYNC" && msg.settings) {
       syncToPage(msg.settings);
